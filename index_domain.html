@@ -18,7 +18,7 @@
 		height: auto;
 	}
 </style>
-<title>登录</title>
+<title>无cookie测试</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
 			<div class="form">
 				<div class="flex">
 					<div class="left">手机号：</div>
-					<div class="flex_item"><input type="text" placeholder="" class="txt" maxlength="11" value="" id="txt1" name="tel" autocomplete="off"/></div>
+					<div class="flex_item"><input type="text" placeholder="" class="txt" maxlength="11" value="13800138000" id="txt1" name="tel" autocomplete="off"/></div>
 				</div>
 				<div class="flex">
 					<div class="left">验证码：</div>
@@ -49,9 +49,10 @@
 			</div>
 		</form>
 	</div>
+	 <a href="index.html">去有cookiece测试</a>
 	<script>
 		//存在cookie的时候，调用
-		var tim=new CountDown({id:"send"});
+		var tim=new CountDown({id:"send",useDomain:window.location.pathname});
 		var tim1;
 		var mphone=/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
 		var valid=/^\S\S{4,16}\S$/;//6-18位不为空的字符,/^\S\S{4,16}\S$/,/([^\s]{6,18})/
@@ -111,6 +112,7 @@
 					//发送
 				},
 				duringTime:30,
+				useDomain:window.location.pathname,
 				duringEvent:function(){
 					/*$("#yuyin").css({
 						  'display': '-webkit-box',
