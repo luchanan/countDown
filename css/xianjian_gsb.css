@@ -1,0 +1,248 @@
+.finish{
+	text-align: center;
+	margin-top: 80px;
+}
+.finish_1 img{
+	width: 270px;/*644/750=86%电脑显示的是276 ,psd如果是750*/
+	max-width: 270px;/*276/644=2.33倍*/
+	-webkit-touch-callout: none;
+	-webkit-user-select:none;
+}
+.finish_2 a img{
+	width: 275px;/*或320/640,320/750=2.34375*/
+	max-width: 275px;/*或750*2/640=2.34375*/
+	-webkit-touch-callout: none;
+	-webkit-user-select:none;
+}
+.finish_2{
+	margin-top: 65px;
+}
+.yaoqing{
+	text-align: center;
+	padding: 54px 25px 48px 25px;
+}
+.yaoqing1 img{
+	width: 261px;
+	max-width: 261px;
+}
+.yaoqing3{
+	color: #666666;
+	font-size: 14px;
+	line-height: 22px;
+	text-align: left;
+}
+.flex{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	font-size: 0;
+}
+.yaoqing .flex .flex_item:first-child{
+	margin-right: 28px;
+}
+.yaoqing .flex .flex_item{
+	margin-bottom: 22px;
+	position: relative;
+}
+.flex_item{
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+}
+.yaoqing .flex_item img{
+	width: 122px;
+	max-width: 122px;
+}
+.yaoqing .font{
+	text-align: left;
+}
+.yaoqing .font span{
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 13px;
+	color: #452f01;
+	line-height: 18px;
+	padding:14px 0 0 48px;
+	display: table-cell;
+	vertical-align: middle;
+	height: 100%;
+	width: 100%;
+}
+.flex_wrap{
+	margin-top: 64px;
+}
+.btnyao{
+	background-color: #eb1515;
+	height: 48px;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.btnyao a{
+	height: 48px;
+	padding: 9px 0 0 0;
+}
+.btnyao img{
+	width: 100px;
+	max-width: 100px;
+}
+.form {
+	padding: 0 20px;
+}
+.form .left{
+	font-size:16px;
+	color: #333333;
+	text-align: right;
+}
+.form .left{
+	width: 65px;
+	line-height: 37px;
+}
+.form .flex{
+	margin-bottom: 15px;
+}
+.txt{
+	width: 100%;
+	height: 37px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #fff;
+	border: solid 1px #dadada;
+	padding: 0 8px;
+	-webkit-appearance: none;
+	font-size: 16px;
+	line-height: 1;
+}
+.form .right .countdown{
+	font-size: 13px;
+	color: #444444;
+	height: 37px;
+	-webkit-border-radius: 3px 4px 4px 3px/3px;
+	-moz-border-radius: 3px 4px 4px 3px/3px;
+	border-radius: 3px 4px 4px 3px/3px;
+	background-color: #eee;
+	border: solid 1px #dadada;
+	background-image: -webkit-linear-gradient(bottom, #eee, #f4f4f4);
+	background-image: -moz-linear-gradient(bottom, #eee, #f4f4f4);
+	background-image: -o-linear-gradient(bottom, #eee, #f4f4f4);
+	background-image: -ms-linear-gradient(bottom, #eee, #f4f4f4);
+	background-image: linear-gradient(to top, #eee, #f4f4f4);
+	margin: 0px 4px 0 4px;
+	width: 85px;
+}
+.form .right .disabled{
+	color: #cccccc;
+	font-size: 13px;
+	height: 37px;
+	-webkit-border-radius: 3px 4px 4px 3px/4px 4px 3px 3px;
+	-moz-border-radius: 3px 4px 4px 3px/4px 4px 3px 3px;
+	border-radius: 3px 4px 4px 3px/4px 4px 3px 3px;
+	background-color: #eee;
+	border: solid 1px #dadada;
+	margin: 0px 4px 0 4px;
+	width: 85px;
+}
+.imgwrap{
+	font-size: 0;
+}
+.imgwrap1{
+	width: 285px;
+	margin: 0 auto 15px auto;
+}
+.imgwrap2{
+	width: 220px;
+	margin: 0px auto 30px auto;
+	position: relative;
+}
+.imgwrap2 .name{
+	font-size: 15px;
+	display: inline-block;
+	width: 110px;
+	max-width: 110px;
+	position:absolute;
+	left: -30px;
+	bottom: -18px;
+	text-align: center;
+}
+.submit{
+	width: 280px;
+	margin: 0 auto;
+	position: relative;
+}
+.bt{
+	font-size: 14px;
+	color: #666666;
+	padding: 0 30px;
+}
+.touxinag{
+	  width: 41px;
+  height: 41px;
+  position: absolute;
+  left: 6px;
+  top: 24px;
+}
+.touxinag img{
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+}
+.rigister{
+	padding: 10px 0 0px 0;
+}
+#yuyin{
+	font-size:12px;
+	color: #666666;
+	margin: -15px 0 0 0;
+	line-height: 50px;
+	display: none;
+}
+#tips{
+	line-height: 15px;
+	margin: -15px 0 0 0;
+	font-size: 12px;
+	padding: 5px 0;
+	color: #ff3a3a;
+	display: none;
+}
+.form .flex_item{
+	padding: 0 4px 0 0;
+}
+#yuyin i{
+	color: #0b53be;
+}
+.layermcont{
+	background-color: rgba(0,0,0,0.7);
+	color: #fff;
+	-webkit-border-radius: 2x;
+	border-radius: 2px;
+	font-size: 12px;
+	line-height: 17px;
+	text-align: center;
+	padding: 15px 15px;
+}
+.submit input{
+	-webkit-appearance: none;
+	height: 52px;
+	border:none;
+	width: 100%;
+	background-color: transparent;
+	position: absolute;
+	left: 0;
+	top: 0;
+	text-indent: -9999em;
+}
+.share {
+  display: none;
+  padding: 10px 0 0 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background-color: #000;
+  opacity: 0.8;
+}

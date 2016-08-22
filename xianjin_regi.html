@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no,email=no" name="format-detection" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<link rel="stylesheet" type="text/css" href="css/mCssreset.css">
+<script src="http://cdn.bootcss.com/zepto/1.1.6/zepto.min.js"></script>
+<script src="countdown.js"></script>
+<link rel="stylesheet" type="text/css" href="css/xianjian_gsb.css">
+<style>
+	html,body{
+		background: url(images/201506081721/16.jpg) scroll no-repeat top center;
+		background-size: cover;
+		position: relative;
+		height: auto;
+	}
+</style>
+<title>登录</title>
+</head>
+
+<body>
+	<div class="rigister">
+		<form action="test.php" id="post_form">
+			<div class="form">
+				<div class="flex">
+					<div class="left">手机号：</div>
+					<div class="flex_item"><input type="text" placeholder="" class="txt" maxlength="11" value="" id="txt1" name="tel" autocomplete="off"/></div>
+				</div>
+				<div class="flex">
+					<div class="left">验证码：</div>
+					<div class="flex_item"><input type="text" placeholder="" class="txt" maxlength="6" id="txt2" name="code" autocomplete="off"/></div>
+					<div class="right"><input type="button" value="获取验证码" class="countdown" id="send"></div>
+				</div>
+				<div class="flex" id="yuyin">
+					<div class="left"></div>
+					<div class="flex_item">未收到验证码？试试<i>语音验证码</i></div>
+				</div>
+				<div class="flex" id="tips">
+					<div class="left"></div>
+					<div class="flex_item">您的手机将在60秒内收到语音电话，请及时接听并输入</div>
+				</div>
+				<div class="flex">
+					<div class="left">密        码：</div>
+					<div class="flex_item"><input type="password" placeholder="" class="txt" maxlength="30" id="txt3"  name="pass" autocomplete="off"/></div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+		//存在cookie的时候，调用
+		var tim=new CountDown({id:"send"});
+		var tim1;
+		var mphone=/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+		var valid=/^\S\S{4,16}\S$/;//6-18位不为空的字符,/^\S\S{4,16}\S$/,/([^\s]{6,18})/
+		$("#post_form").submit(function(event){
+			event.preventDefault();
+			var t1=$("#txt1").val();
+			var t2=$("#txt2").val();
+			var t3=$("#txt3").val();
+			if(t1==""){
+				layer.open({content: '请输入手机号码',time: 300,shade:true});
+				return false;
+			}
+			else if(!mphone.test(t1)){
+				layer.open({content: '请输入正确的手机号码',time: 3,shade:false});
+				return false;
+			}
+			else if(t2==""){
+				layer.open({content: '请输入验证码',time: 3,shade:false});
+				return false;
+			}
+			else if(t3==""){
+				layer.open({content: '请输入密码',time: 3,shade:false});
+				return false;
+			}
+			else if(!valid.test(t3)){
+				layer.open({content: '密码需为6-18个字符，且不能含空格',time: 3,shade:false});
+				return false;
+			}
+			$.ajax({
+				type:"POST",
+				url:$("#post_form").attr("action"),
+				async:true,
+				data:$("#post_form").serialize(),
+				beforeSend:function(){
+					//console.log($("#post_form").serialize());//序列化前提表单要有name
+				},
+				success:function(result){
+
+				}
+			});
+		});
+		document.getElementById("send").onclick=function(){
+			var t1=$("#txt1").val();
+			if(t1==""){
+				layer.open({content: '请输入手机号码',time: 3,shade:false});
+				return false;
+			}
+			else if(!mphone.test(t1)){
+				layer.open({content: '请输入正确的手机号码',time: 3,shade:false});
+				return false;
+			}
+			tim1=new CountDown({
+				id:"send",
+				afterFont:"重发短信",
+				useCookie:false,
+				clicking:function(){
+					//发送
+				},
+				duringTime:30,
+				duringEvent:function(){
+					/*$("#yuyin").css({
+						  'display': '-webkit-box',
+						  'display': '-webkit-flex',
+						  'display': 'flex'
+					});*//*手机显示错误，因为flex代替前面两个,而flex手机不识别*/
+					/*$("#yuyin").css({
+						  'display': 'flex',
+						  'display': '-webkit-flex',
+						  'display': '-webkit-box'
+
+					});*/
+					$("#yuyin").attr("style",'display:-webkit-box;display:-webkit-flex;display:flex');
+				},
+				callback:function(){
+					tim1=null;
+					$("#yuyin").hide();
+				}
+			});
+			tim1.startCount();
+		}
+		document.getElementById("yuyin").onclick=function(){
+			tim1.clearTimeId();
+			tim1=null;
+			$("#yuyin").hide();
+			tim1=new CountDown({
+				id:"send",
+				clicking:function(){
+					//发送
+					$("#yuyin").hide();
+					$("#tips").css({
+						  'display': '-webkit-box',
+						  'display': '-webkit-flex',
+						  'display': 'flex'
+					});
+				},
+				callback:function(){
+					tim1=null;
+					$("#tips").hide();
+				}
+			});
+			tim1.startCount();
+		};
+	</script>
+</body>
+</html>
