@@ -1,6 +1,6 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
-	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
+	this.timer=settings.timer||5;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
 	this.clicking=settings.clicking||function(){};//倒计时点击时的回调函数
@@ -9,10 +9,11 @@ function CountDown(settings){
 	this.disabledClass=settings.disabledClass||'disabled';//禁用样式
 	this.clickFont=settings.clickFont||"秒后重发";
 	this.afterFont=settings.afterFont||"重新发送";
-	this.useCookie=settings.useCookie||true;
+	this.useCookie=settings.useCookie;
 	this.flag=false;
 	this.isfirst=true;
 	this.countTime=0;
+	this.timeId=[];
 	this.cookieName="countdown";//设置cookie名字
 	this.cookieTime=settings.cookieTime||1;//分钟
 	this.init();//初始化
@@ -64,11 +65,14 @@ CountDown.prototype={
 			if(this.useCookie){
 				this.setCookie(this.countTime);
 			}
-			this.timeId=setTimeout(function(){that.startCount()},1000);
+			this.timeId.push(setTimeout(function(){that.startCount()},1000));
 		}
 	},
 	clearTimeId:function(){
-		clearTimeout(this.timeId);
+		var timeoutLen=this.timeoutId.length;
+		for (var i = 0; i<timeoutLen; i++) {
+		    clearTimeout(this.timeoutId[i]);
+		}
 		this.clearCookie();
 	},
 	setCookie:function(num){
@@ -100,5 +104,8 @@ CountDown.prototype={
     		exp.setTime(exp.getTime()- 1);
 			document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path=/;expires="+exp.toGMTString();
 		}
+	},
+	destory:function(){
+
 	}
 }
