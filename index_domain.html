@@ -18,7 +18,7 @@
 		height: auto;
 	}
 </style>
-<title>登录</title>
+<title>无cookie测试</title>
 </head>
 
 <body>
@@ -49,9 +49,10 @@
 			</div>
 		</form>
 	</div>
+	 <a href="index.html">去有cookiece测试</a>
 	<script>
 		//存在cookie的时候，调用
-		var tim=new CountDown({id:"send"});
+		var tim=new CountDown({id:"send",useDomain:window.location.pathname});
 		var tim1;
 		var mphone=/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
 		var valid=/^\S\S{4,16}\S$/;//6-18位不为空的字符,/^\S\S{4,16}\S$/,/([^\s]{6,18})/
@@ -106,11 +107,12 @@
 			tim1=new CountDown({
 				id:"send",
 				afterFont:"重发短信",
-				useCookie:true,
+				useCookie:false,
 				clicking:function(){
 					//发送
 				},
 				duringTime:30,
+				useDomain:window.location.pathname,
 				duringEvent:function(){
 					/*$("#yuyin").css({
 						  'display': '-webkit-box',

@@ -1,5 +1,6 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
+	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
 	this.timer=settings.timer||5;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
@@ -9,27 +10,26 @@ function CountDown(settings){
 	this.disabledClass=settings.disabledClass||'disabled';//禁用样式
 	this.clickFont=settings.clickFont||"秒后重发";
 	this.afterFont=settings.afterFont||"重新发送";
-	this.useCookie=settings.useCookie;
+	this.useCookie=settings.useCookie||"yes";//是否用存到cookie
+	this.useDomain=settings.useDomain||"/";//cookie存放作用域
 	this.flag=false;
 	this.isfirst=true;
 	this.countTime=0;
-	this.timeId=[];
 	this.cookieName="countdown";//设置cookie名字
 	this.cookieTime=settings.cookieTime||1;//分钟
 	this.init();//初始化
 }
 CountDown.prototype={
 	init:function(){
-		console.log(this.useCookie);
 		var isExist=this.isExistCookie(this.cookieName);
-		if(isExist&&this.useCookie){
+		if(isExist&&this.useCookie==='yes'){
 			var val=this.getCookieValue(this.cookieName);
 			this.timer=val;
+			this.clearTimeId();
 			this.startCount();
 		}
 	},
 	startCount:function(){
-		console.log(this.useCookie);
 		//开始计时
 		var that=this;
 		if(!this.flag){
@@ -62,7 +62,7 @@ CountDown.prototype={
 			o.value=this.countTime+this.clickFont;
 			this.countTime--;
 			//倒计时是否存到cookie
-			if(this.useCookie){
+			if(this.useCookie==='yes'){
 				this.setCookie(this.countTime);
 			}
 			this.timeId.push(setTimeout(function(){that.startCount()},1000));
@@ -80,9 +80,9 @@ CountDown.prototype={
 		var time=new Date();
 		time.setMinutes(time.getMinutes()+this.cookieTime);
 		if(!isExist){
-			document.cookie=this.cookieName+"="+num+";path=/;expires="+time.toUTCString();
+			document.cookie=this.cookieName+"="+num+";path="+this.useDomain+";expires="+time.toUTCString();
 		}
-		document.cookie=this.cookieName+"="+num+";path=/;expires="+time.toUTCString();
+		document.cookie=this.cookieName+"="+num+";path="+this.useDomain+";expires="+time.toUTCString();
 		var cookieValue=this.getCookieValue(this.cookieName);
 		if(cookieValue==0){
 			this.clearCookie();
@@ -103,6 +103,7 @@ CountDown.prototype={
 			var exp = new Date();
     		exp.setTime(exp.getTime()- 1);
 			document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path=/;expires="+exp.toGMTString();
+			document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path="+this.useDomain+";expires="+exp.toGMTString();
 		}
 	},
 	destory:function(){
