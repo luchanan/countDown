@@ -1,7 +1,6 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
 	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
-	this.timer=settings.timer||5;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
 	this.clicking=settings.clicking||function(){};//倒计时点击时的回调函数
@@ -65,14 +64,11 @@ CountDown.prototype={
 			if(this.useCookie==='yes'){
 				this.setCookie(this.countTime);
 			}
-			this.timeId.push(setTimeout(function(){that.startCount()},1000));
+			this.timeId=setTimeout(function(){that.startCount()},1000);
 		}
 	},
 	clearTimeId:function(){
-		var timeoutLen=this.timeoutId.length;
-		for (var i = 0; i<timeoutLen; i++) {
-		    clearTimeout(this.timeoutId[i]);
-		}
+		clearTimeout(this.timeId);
 		this.clearCookie();
 	},
 	setCookie:function(num){
@@ -102,11 +98,8 @@ CountDown.prototype={
 		if(this.isExistCookie(this.cookieName)){
 			var exp = new Date();
     		exp.setTime(exp.getTime()- 1);
-			document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path=/;expires="+exp.toGMTString();
+    		document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path=/;expires="+exp.toGMTString();
 			document.cookie=this.cookieName+"="+this.getCookieValue(this.cookieName)+";path="+this.useDomain+";expires="+exp.toGMTString();
 		}
-	},
-	destory:function(){
-
 	}
 }
