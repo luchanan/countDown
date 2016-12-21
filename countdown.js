@@ -1,6 +1,6 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
-	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
+	this.timer=settings.timer||10;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
 	this.clicking=settings.clicking||function(){};//倒计时点击时的回调函数
@@ -9,6 +9,7 @@ function CountDown(settings){
 	this.disabledClass=settings.disabledClass||'disabled';//禁用样式
 	this.clickFont=settings.clickFont||"秒后重发";
 	this.afterFont=settings.afterFont||"重新发送";
+	this.refreshFont=settings.refreshFont||"获取验证码";
 	this.useCookie=settings.useCookie||"yes";//是否用存到cookie
 	this.useDomain=settings.useDomain||window.location.pathname;//cookie存放作用域
 	this.flag=false;
@@ -28,14 +29,18 @@ CountDown.prototype={
 			if(this.useCookie==='yes'){
 				if(this.isExistCookie(this.cookieName)){
 					var current=((new Date()).getTime());
-					console.log(current);
 					var pre=JSON.parse(this.getCookieValue(this.cookieName))['prevTimeStamp'];
-					console.log(pre);
 					var timeBetween=parseInt((current-pre)/1000);
-					console.log(timeBetween);
 					var numTime=JSON.parse(this.getCookieValue(this.cookieName))['num'];
 					if(timeBetween!=0){
-						this.timer=numTime-timeBetween<=0?0:numTime-timeBetween;
+						if(numTime-timeBetween<=0){
+							this.timer=0;
+							this.refresh=1;
+						}
+						else{
+							this.timer=numTime-timeBetween;
+							
+						}
 					}
 				}
 			}
@@ -54,6 +59,9 @@ CountDown.prototype={
 		if (this.countTime == 0) {
 			o.removeAttribute("disabled");
 			o.value=this.afterFont;
+			if(this.refresh==1){
+				o.value=this.refreshFont;
+			}
 			this.countTime =this.timer;
 			this.callback();//倒计时完成后的回调函数
 			o.className=this.normalClass;
