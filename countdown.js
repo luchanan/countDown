@@ -10,12 +10,13 @@ function CountDown(settings){
 	this.clickFont=settings.clickFont||"秒后重发";
 	this.afterFont=settings.afterFont||"重新发送";
 	this.useCookie=settings.useCookie||"yes";//是否用存到cookie
-	this.useDomain=settings.useDomain||"/";//cookie存放作用域
+	this.useDomain=settings.useDomain||window.location.pathname;//cookie存放作用域
 	this.flag=false;
 	this.isfirst=true;
 	this.countTime=0;
 	this.cookieName="countdown";//设置cookie名字
 	this.cookieTime=settings.cookieTime||1;//分钟
+	this.prevTimeStamp;
 	this.init();//初始化
 }
 CountDown.prototype={
@@ -23,7 +24,21 @@ CountDown.prototype={
 		var isExist=this.isExistCookie(this.cookieName);
 		if(isExist&&this.useCookie==='yes'){
 			var val=this.getCookieValue(this.cookieName);
-			this.timer=val;
+			this.timer=JSON.parse(val)['num'];
+			if(this.useCookie==='yes'){
+				if(this.isExistCookie(this.cookieName)){
+					var current=((new Date()).getTime());
+					console.log(current);
+					var pre=JSON.parse(this.getCookieValue(this.cookieName))['prevTimeStamp'];
+					console.log(pre);
+					var timeBetween=parseInt((current-pre)/1000);
+					console.log(timeBetween);
+					var numTime=JSON.parse(this.getCookieValue(this.cookieName))['num'];
+					if(timeBetween!=0){
+						this.timer=numTime-timeBetween<=0?0:numTime-timeBetween;
+					}
+				}
+			}
 			this.clearTimeId();
 			this.startCount();
 		}
@@ -74,13 +89,20 @@ CountDown.prototype={
 	setCookie:function(num){
 		var isExist=this.isExistCookie(this.cookieName);
 		var time=new Date();
+		// if(this.isExistCookie(this.cookieName)&&this.useCookie==='yes'){
+		// 	this.prevTimeStamp=JSON.parse(this.getCookieValue(this.cookieName))['prevTimeStamp'];
+		// }
+		// else{
+			this.prevTimeStamp=(new Date()).getTime();
+		// }
+		num=JSON.stringify({num:num,prevTimeStamp:this.prevTimeStamp});
 		time.setMinutes(time.getMinutes()+this.cookieTime);
 		if(!isExist){
 			document.cookie=this.cookieName+"="+num+";path="+this.useDomain+";expires="+time.toUTCString();
 		}
 		document.cookie=this.cookieName+"="+num+";path="+this.useDomain+";expires="+time.toUTCString();
 		var cookieValue=this.getCookieValue(this.cookieName);
-		if(cookieValue==0){
+		if(JSON.parse(cookieValue)['num']==0){
 			this.clearCookie();
 		}
 	},
