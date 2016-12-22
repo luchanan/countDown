@@ -134,7 +134,7 @@
 	margin: 0px 4px 0 4px;
 	width: 85px;
 }
-.form .right .disabled{
+.form .right .disabled,.form .right input:disabled{
 	color: #cccccc;
 	font-size: 13px;
 	height: 37px;

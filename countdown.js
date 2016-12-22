@@ -1,10 +1,11 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
-	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
+	this.timer=settings.timer||10;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
 	this.clicking=settings.clicking||function(){};//倒计时点击时的回调函数
 	this.callback=settings.callback||function(){};//倒计时完成后的回调函数
+	this.refreshCallback=settings.refreshCallback||function(){};//从其他页面或刷新，倒计时完成后回调函数
 	this.normalClass=settings.normalClass||'countdown';//正常样式
 	this.disabledClass=settings.disabledClass||'disabled';//禁用样式
 	this.clickFont=settings.clickFont||"秒后重发";
@@ -58,13 +59,14 @@ CountDown.prototype={
 		var o=document.getElementById(that.id);
 		if (this.countTime == 0) {
 			o.removeAttribute("disabled");
+			o.className=this.normalClass;
 			o.value=this.afterFont;
 			if(this.refresh==1){
 				o.value=this.refreshFont;
+				this.refreshCallback();//从其他页面或刷新，倒计时完成后回调函数
 			}
 			this.countTime =this.timer;
 			this.callback();//倒计时完成后的回调函数
-			o.className=this.normalClass;
 		}
 		else {
 			if(this.isfirst){
@@ -97,12 +99,7 @@ CountDown.prototype={
 	setCookie:function(num){
 		var isExist=this.isExistCookie(this.cookieName);
 		var time=new Date();
-		// if(this.isExistCookie(this.cookieName)&&this.useCookie==='yes'){
-		// 	this.prevTimeStamp=JSON.parse(this.getCookieValue(this.cookieName))['prevTimeStamp'];
-		// }
-		// else{
-			this.prevTimeStamp=(new Date()).getTime();
-		// }
+		this.prevTimeStamp=(new Date()).getTime();
 		num=JSON.stringify({num:num,prevTimeStamp:this.prevTimeStamp});
 		time.setMinutes(time.getMinutes()+this.cookieTime);
 		if(!isExist){
