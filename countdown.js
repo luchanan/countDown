@@ -1,6 +1,6 @@
 function CountDown(settings){
 	this.id=settings.id;//倒计时绑定的对象
-	this.timer=settings.timer||10;//倒计时多少秒,默认参数与新参数替换
+	this.timer=settings.timer||60;//倒计时多少秒,默认参数与新参数替换
 	this.duringTime=settings.duringTime||null;//多少秒后执行
 	this.duringEvent=settings.duringEvent||null;//多少秒后执行的事件
 	this.clicking=settings.clicking||function(){};//倒计时点击时的回调函数
