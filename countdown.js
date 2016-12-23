@@ -12,7 +12,7 @@ function CountDown(settings){
 	this.afterFont=settings.afterFont||"重新发送";
 	this.refreshFont=settings.refreshFont||"获取验证码";
 	this.useCookie=settings.useCookie||"yes";//是否用存到cookie
-	this.useDomain=settings.useDomain||window.location.pathname;//cookie存放作用域
+	this.useDomain=settings.useDomain||window.location.pathname;//cookie存放作用域,如果想点这个验证码倒计时，然后去其他页面验证码也倒计时的话，这里就要设置'/'，注意设置了这个'/'，那么其他页面的也要设置这个，否者会出现问题
 	this.flag=false;
 	this.isfirst=true;
 	this.countTime=0;
